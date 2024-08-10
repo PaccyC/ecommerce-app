@@ -1,4 +1,4 @@
-import { Banner,Product,Footer } from "./components"
+import { Banner,Product,Footer, FooterBanner } from "./components"
 import { client } from "./lib/client"
 const index =async () => {
 
@@ -8,6 +8,7 @@ const index =async () => {
   const bannerData= await client.fetch(bannerQuery)
  
   console.log(bannerData);
+
   return (
     <>
 
@@ -21,13 +22,20 @@ const index =async () => {
 
     <div className='products-container'>
       {products?.map((product)=>(
-        <Product/>
+       <Product key={product._id} product={product} />
       ))}
     </div>
 
-    <Footer/>
+    <FooterBanner footerBanner={bannerData?.[0]}/>
     </>
   )
 }
 
 export default index
+
+// # Warning: Do not add secrets (API keys and similar) to this file, as it source controlled!
+// # Use `.env.local` for any secrets, and ensure it is not added to source control
+
+// NEXT_PUBLIC_SANITY_PROJECT_ID="srq55yft"
+// NEXT_PUBLIC_SANITY_DATASET="production"
+// NEXT_PUBLIC_SANITY_TOKEN=skma6IDZtRHN14ff6xRkwx5DI6rsxLyYGxFTdiV18YsOgfqHIUmGta4FjrfkmVfZGVpOMKXaLEgURe3ioCvKZrOEF0nVfeh2jaILvrxrxOTrjfcnlI2nwWNdr7WQKHtCdAIArYoSjICuVsgCEw2MejPMRQDKzzhLtxoyAQ8fug2zEcIWU4zf
