@@ -1,5 +1,6 @@
 import product from "../schemas/product"
 import banner from "../schemas/banner"
+import bannerb from "../schemas/bannerb"
 export const schema = {
-  types: [product,banner],
+  types: [banner,product,bannerb],
 }

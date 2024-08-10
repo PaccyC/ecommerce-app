@@ -1,9 +1,18 @@
 import { Banner,Product,Footer } from "./components"
-const index = () => {
+import { client } from "./lib/client"
+const index =async () => {
+
+  const query= "*[_type == 'product']"
+  const products= await client.fetch(query)
+  const bannerQuery= "*[_type == 'bannerb']"
+  const bannerData= await client.fetch(bannerQuery)
+ 
+  console.log(bannerData);
   return (
     <>
 
-   <Banner/>
+   <Banner heroBanner={bannerData?.[0]}/>
+  
 
     <div className='products-heading'>
       <h2 >Best Selling Products</h2>
@@ -11,7 +20,7 @@ const index = () => {
     </div>
 
     <div className='products-container'>
-      {['Product1','Product2' ].map((product)=>(
+      {products?.map((product)=>(
         <Product/>
       ))}
     </div>
