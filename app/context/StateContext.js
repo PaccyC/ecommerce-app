@@ -6,13 +6,16 @@ import toast from 'react-hot-toast'
 export const Context= createContext();
 
 export const StateContext= ({children})=>{
-    const [showCart, setshowCart] = useState(false)
+    const [showCart, setShowCart] = useState(false)
     const [cartItems, setcartItems] = useState([])
-    const [totalPrice, setTotalPrice] = useState()
-    const [totalQuantities, setTotalQuantities] = useState()
+    const [totalPrice, setTotalPrice] = useState(0)
+    const [totalQuantities, setTotalQuantities] = useState(0)
     const [qty,setQty] =useState(1) ;
 
-    const incQty =()=>{
+    let foundProduct;
+    let index;
+
+const incQty =()=>{
         setQty((prevQty)=> prevQty+1 )
     }
     
@@ -25,33 +28,54 @@ export const StateContext= ({children})=>{
         } )
     }
 
-    const onAdd = (product,quantity)=>{
-
-        const checkProductInCart = ((product)=> cartItems.find((item)=> item._id === product._id));
-
-        setTotalPrice((prevTotalPrice)=> prevTotalPrice + product.price*quantity);
-        setTotalQuantities((prevTotalQuantity)=> prevTotalQuantity + quantity);
-        // When product is already in cart
-        if(checkProductInCart){
-         
-         const updatedCartItems= cartItems.map((cartItem)=>{
-             if(cartItem._id === product._id){
-                 return {
-                     ...cartItem,
-                     quantity: cartItem.quantity + quantity
-                    }
+    const onAdd = (product, quantity) => {
+        console.log('Product to add:', product);
+        console.log('Cart items before update:', cartItems);
+        const checkProductInCart = cartItems.find((item) => item._id === product._id);
+    
+        setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
+        setTotalQuantities((prevTotalQuantity) => prevTotalQuantity + quantity);
+    
+        if (checkProductInCart) {
+            const updatedCartItems = cartItems.map((cartItem) => {
+                if (cartItem._id === product._id) {
+                    return {
+                        ...cartItem,
+                        quantity: cartItem.quantity + quantity,
+                    };
                 }
-            })
+                return cartItem;
+            });
             setcartItems(updatedCartItems);
+        } else {
+            product.quantity = quantity;
+            setcartItems([...cartItems, { ...product }]);
         }
-        // New product in the cart
-        else{
-            
-            product.quantity=quantity;
-            setcartItems([...cartItems,{...product}]);
+    
+        toast.success(`${quantity} ${product.name} added to the cart.`);
+    };
+    
+    const toggleCartItemQuantity = ( id, value)=>{
+        foundProduct = cartItems.find((item)=> item._id === id);
+        index = cartItems.findIndex((product)=> product._id === id);
+
+        const newCartItems= cartItems.filter((item)=> item._id !==id);
+        if( value === "inc"){
+        setcartItems([...newCartItems,{...foundProduct, 
+                  quantity: foundProduct.quantity + 1}])
+        setTotalPrice((prevTotalPrice)=> prevTotalPrice + foundProduct.price)  ;
+        setTotalQuantities((prevTotalQuantities)=> prevTotalQuantities + 1);        
         }
-        toast.success(`${quantity} ${product.name} has been added to cart`)
-      }
+        else if(value === "dec"){
+
+            if( foundProduct.quantity >1){
+                setcartItems([...newCartItems,{...foundProduct, 
+                  quantity: foundProduct.quantity -1}])
+                setTotalPrice((prevTotalPrice)=> prevTotalPrice- foundProduct.price)  ;
+                setTotalQuantities((prevTotalQuantities)=> prevTotalQuantities-1);
+            }
+        }
+    }
     return (
         <Context.Provider value={{ 
                    cartItems,
@@ -59,7 +83,11 @@ export const StateContext= ({children})=>{
                    totalPrice,
                    totalQuantities,
                    qty,
-                   incQty,decQty,onAdd}}>
+                   setShowCart,
+                   incQty,
+                   decQty,
+                   onAdd,
+                   toggleCartItemQuantity}}>
             {children}
         </Context.Provider>
     )

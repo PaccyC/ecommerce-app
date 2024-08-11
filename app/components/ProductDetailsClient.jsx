@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { urlFor } from '@/app/lib/client';
 import { AiOutlineMinus, AiOutlinePlus, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { Product } from '@/app/components';
-import { Context, useStateContext } from '@/app/context/StateContext';
+import {useStateContext } from '@/app/context/StateContext';
 
 const ProductDetailsClient = ({ product, products }) => {
   const [index, setIndex] = useState(0);

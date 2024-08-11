@@ -1,8 +1,7 @@
 
 import React from 'react'
-import { urlFor,client } from '@/app/lib/client'
-import { AiOutlineMinus,AiOutlineStar,AiFillStar,AiOutlinePlus } from 'react-icons/ai'
-import { Product, ProductDetailsClient } from '@/app/components'
+import {client } from '@/app/lib/client'
+import {  ProductDetailsClient } from '@/app/components'
 
 
 
