@@ -3,7 +3,8 @@ import "./globals.css";
 import Head from "next/head";
 import { Navbar } from "./components";  
 import { Footer } from "./components";
-
+import { StateContext } from "./context/StateContext";
+import {Toaster} from 'react-hot-toast'
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -16,7 +17,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
+        <StateContext>
+
+      
         <div className="layout">
+          <Toaster />
           <Head>
             <title>Pacific Store</title>
           </Head>
@@ -30,6 +35,7 @@ export default function RootLayout({ children }) {
             <Footer />
           </footer>
         </div>
+        </StateContext>
       </body>
     </html>
   );
