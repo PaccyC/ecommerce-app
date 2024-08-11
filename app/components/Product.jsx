@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { urlFor } from "../lib/client"
-const Product = ({product:{slug,image,price,name}}) => {
+const Product = ({product:{slug,image,price,name,_id}}) => {
   return (
     <div>
 

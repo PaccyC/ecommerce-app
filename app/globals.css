@@ -676,6 +676,7 @@ margin-top: 160px;
    bottom: 60px;
   }
   .product-detail-container{
+    
     flex-wrap: wrap;
     }
   .product-detail-container .product-detail-image{

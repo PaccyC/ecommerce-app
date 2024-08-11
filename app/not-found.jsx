@@ -3,7 +3,7 @@ import React from 'react'
 const page = () => {
   return (
     <div>
-        Sorry, the page requested was not found
+      <p>Sorry, the page you requested is not found. Please Go Back </p>
     </div>
   )
 }
