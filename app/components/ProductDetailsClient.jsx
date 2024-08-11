@@ -10,7 +10,7 @@ const ProductDetailsClient = ({ product, products }) => {
   const [index, setIndex] = useState(0);
   const { image, name, details, price } = product;
 
-  const { qty, incQty, decQty } = useStateContext();
+  const { qty, incQty, decQty,onAdd } = useStateContext();
 
   return (
     <div>
@@ -55,7 +55,7 @@ const ProductDetailsClient = ({ product, products }) => {
             </p>
           </div>
           <div className="buttons">
-            <button type="button" className="add-to-cart">Add to Cart</button>
+            <button type="button" className="add-to-cart" onClick={()=>onAdd(product,qty)}>Add to Cart</button>
             <button type="button" className="buy-now">Buy Now</button>
           </div>
         </div>
