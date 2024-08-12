@@ -11,7 +11,6 @@ import { useEffect } from "react";
 const Cart = () => {
   const cartRef= useRef();
   const {cartItems,totalPrice, totalQuantities,setShowCart,toggleCartItemQuantity,onRemoveItem} = useStateContext();
-  console.log('Cart items:', cartItems);
 
   return (
     <div className="cart-wrapper" ref={cartRef}>

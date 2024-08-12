@@ -29,8 +29,7 @@ const incQty =()=>{
     }
 
     const onAdd = (product, quantity) => {
-        console.log('Product to add:', product);
-        console.log('Cart items before update:', cartItems);
+        
         const checkProductInCart = cartItems.find((item) => item._id === product._id);
     
         setTotalPrice((prevTotalPrice) => prevTotalPrice + product.price * quantity);
