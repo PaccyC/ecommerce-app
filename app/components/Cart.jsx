@@ -10,7 +10,7 @@ import Link from "next/link";
 import { useEffect } from "react";
 const Cart = () => {
   const cartRef= useRef();
-  const {cartItems,totalPrice, totalQuantities,setShowCart,toggleCartItemQuantity} = useStateContext();
+  const {cartItems,totalPrice, totalQuantities,setShowCart,toggleCartItemQuantity,onRemoveItem} = useStateContext();
   console.log('Cart items:', cartItems);
 
   return (
@@ -64,7 +64,7 @@ const Cart = () => {
                 <button 
                  type="button"
                  className="remove-item"
-                 onClick=""
+                 onClick={()=>onRemoveItem(item)}
                 >
                   <TiDeleteOutline/> 
                 </button>

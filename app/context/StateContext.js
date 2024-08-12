@@ -71,10 +71,19 @@ const incQty =()=>{
             if( foundProduct.quantity >1){
                 setcartItems([...newCartItems,{...foundProduct, 
                   quantity: foundProduct.quantity -1}])
-                setTotalPrice((prevTotalPrice)=> prevTotalPrice- foundProduct.price)  ;
+                setTotalPrice((prevTotalPrice)=> prevTotalPrice - foundProduct.price)  ;
                 setTotalQuantities((prevTotalQuantities)=> prevTotalQuantities-1);
             }
         }
+    }
+
+    const onRemoveItem= (product)=>{
+        foundProduct = cartItems.find((item)=> item._id === product._id);
+        const newCartItems= cartItems.filter((item)=> item._id !==product._id);
+
+        setTotalPrice((prevTotalPrice)=> prevTotalPrice - foundProduct.price*foundProduct.quantity);
+        setTotalQuantities((prevTotalQuantities)=> prevTotalQuantities - foundProduct.quantity);
+        setcartItems(newCartItems);
     }
     return (
         <Context.Provider value={{ 
@@ -87,7 +96,8 @@ const incQty =()=>{
                    incQty,
                    decQty,
                    onAdd,
-                   toggleCartItemQuantity}}>
+                   toggleCartItemQuantity,
+                   onRemoveItem}}>
             {children}
         </Context.Provider>
     )
