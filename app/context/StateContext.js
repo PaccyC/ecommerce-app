@@ -96,7 +96,9 @@ const incQty =()=>{
                    decQty,
                    onAdd,
                    toggleCartItemQuantity,
-                   onRemoveItem}}>
+                   onRemoveItem,
+                   setcartItems,setTotalQuantities,
+                   setTotalPrice}}>
             {children}
         </Context.Provider>
     )
