@@ -7,11 +7,36 @@ import { useStateContext } from "../context/StateContext";
 import { TiDeleteOutline } from 'react-icons/ti'
 import { AiOutlinePlus,AiOutlineLeft,AiOutlineMinus,AiOutlineShopping } from 'react-icons/ai'
 import Link from "next/link";
-import { useEffect } from "react";
+import getStripe from "../lib/getStripe";
 const Cart = () => {
   const cartRef= useRef();
   const {cartItems,totalPrice, totalQuantities,setShowCart,toggleCartItemQuantity,onRemoveItem} = useStateContext();
 
+  const handleCheckOut = async()=>{
+
+    try {
+      
+      const stripe= await getStripe();
+      // calling our backend
+      const response= await fetch('/api/stripe',{
+        method:'POST',
+        headers:{
+          "Content-Type":"application/json",
+        },
+        body:JSON.stringify(cartItems)
+      })
+  
+      if(!response.ok) 
+        throw new Error("Failed to create checkout session");
+      const data= await response.json();
+      toast.loading("Redirecting...");
+      stripe.redirectToCheckout({sessionId:data.id})
+    } catch (error ) {
+      console.log(error.message);
+    }
+
+
+  }
   return (
     <div className="cart-wrapper" ref={cartRef}>
       <div className="cart-container">
@@ -82,7 +107,7 @@ const Cart = () => {
            <button 
             type="button"
             className="btn"
-            onClick=""
+            onClick={handleCheckOut}
             >Pay With Stripe</button>
           </div>
         </div>
